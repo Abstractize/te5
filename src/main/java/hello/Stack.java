@@ -1,4 +1,4 @@
-
+package hello;
 public class Stack<T> {
 	private Node<T> top;
 	public void pop() {

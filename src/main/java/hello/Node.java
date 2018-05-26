@@ -1,4 +1,4 @@
-
+package hello;
 
 public class Node<T> {//T de Type
 	private T value;

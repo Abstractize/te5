@@ -1,4 +1,4 @@
-
+package hello;
 public class Tree {
 	private Tnode<Character> root;
 	
@@ -38,10 +38,72 @@ public class Tree {
 		}
 		System.out.println("finished");
 		//Creates the tree
-
-		
-		
+		for (int i = 0; i<values.getLength();i++){
+			this.add(values.peek());
+			values.dequeue();
+			inorderTraversal();
+		}
 	}
+
+		public void add(Character value){
+			if (root == null){
+				root = new Tnode<Character>(value);
+			}
+			else{
+				this.add(value, root);
+			}
+		}
+		private void add(Character value, Tnode<Character> node){
+			System.out.println(node.getValue());
+			if (Character.isLetterOrDigit(value)){
+				if (node.getLeftSon() == null){
+					Tnode<Character> aux = new Tnode<Character>(value);
+					node.setLeftSon(aux);
+					System.out.println("Agregado: "+ value +", ruta finalizada");
+				}else{
+					add(value, node.getLeftSon());
+				}
+			}else{
+				if (node.getRightSon() == null){
+					System.out.println("Agregado: "+ value +", ruta finalizada");
+					Tnode<Character> aux = new Tnode<Character>(value);
+					node.setRightSon(aux);
+				}else{
+					add(value, node.getRightSon());
+				}
+			}
+		}
+
+		//Inorder
+		public void inorderTraversal() {
+			if(this.root == null) {
+				System.out.println("The tree is empty");
+			} else {
+				if(this.root.getLeftSon() != null && this.root.getRightSon() != null) {
+					System.out.println(this.printSubtree(root.getLeftSon()) +  ", " + Integer.toString(this.root.getValue()) + ", " + this.printSubtree(root.getRightSon()));
+				} else if(this.root.getLeftSon() == null && this.root.getRightSon() != null) {
+					System.out.println(Integer.toString(this.root.getValue()) + ", " + this.printSubtree(root.getRightSon()));
+				} else if(this.root.getLeftSon() != null && this.root.getRightSon() == null) {
+					System.out.println(this.printSubtree(root.getLeftSon()) + ", " + Integer.toString(this.root.getValue()));
+				} else if(this.root.getLeftSon() != null && this.root.getRightSon() != null) {
+					System.out.println(Integer.toString(this.root.getValue()));
+				}
+			}
+		}
+		//Print para un subárbol, dada la raíz
+		private String printSubtree(Tnode<Character> current) {
+			String data = current.getValue().toString();
+			if(current.getLeftSon() != null && current.getRightSon() != null) {
+				data += ", " + this.printSubtree(current.getLeftSon()) + ", " + this.printSubtree(current.getRightSon());
+			} else if(current.getLeftSon() == null && current.getRightSon() != null) {
+				data += ", " + this.printSubtree(current.getRightSon());
+			} else if(current.getLeftSon() != null && current.getRightSon() == null) {
+				data += ", " + this.printSubtree(current.getLeftSon());
+			} else if(current.getLeftSon() == null && current.getRightSon() == null) {}
+			return data;
+		}
+
+
 	public Tnode<Character> subTree(String miniexp){
 		Tnode<Character> right = new Tnode<Character>(miniexp.charAt(0));
 		Tnode<Character> left = new Tnode<Character>(miniexp.charAt(2));

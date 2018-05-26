@@ -1,4 +1,4 @@
-
+package hello;
 public class Queue<Type> {
 	private Node<Type> head;
 	private int length;
